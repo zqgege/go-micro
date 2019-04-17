@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package mu.micro.book.srv.user;
+
+service UserServices{
+    rpc QueryUserByNname(Request) returns (Response);
+}
+
+message User {
+    int64 id = 1;
+    string name = 2;
+    string pwd = 3;
+    string createdTime = 4;
+    string updatedTime = 5;
+}
+
+message Error {
+    int32 code = 1;
+    string detail = 2;
+}
+
+message Request {
+    string userID = 1;
+    string userName = 2;
+    string userPwd = 3;
+}
+
+message Response {
+    bool success = 1;
+    Error error = 2;
+    repeated User user = 3;
+}
