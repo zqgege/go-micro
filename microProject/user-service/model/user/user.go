@@ -3,10 +3,10 @@ package user
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	"sync"
-	"time"
 	"microProject/basic/db"
 	proto "microProject/user-service/proto/service"
+	"sync"
+	"time"
 )
 
 var (
@@ -36,7 +36,33 @@ func QueryUserByNname(userName string) ([]*proto.User,  error) {
 		fmt.Println("错误",err)
 		return list,errors.Wrap(err,"错误")
 	}
+	return list,nil
+}
 
+func CreateUser(u *User)(error)  {
+	o := db.GetDB()
+	//var times := time.Now()
+	/*users := &proto.User{
+		Name:"aaa",
+		Pwd:"123",
+		//CreatedTime:"",
+		//UpdatedTime:"",
+	}*/
+	err := o.Create(u)
+	if err != nil {
+		return err.Error
+	}
+	return nil
+}
+
+func GetById(Id uint64)([]*proto.User,error)  {
+	list := make([]*proto.User,0)
+	o := db.GetDB()
+	err := o.Select("id,name,pwd").First(&list,Id).Error
+	if err != nil{
+		fmt.Println("错误",err)
+		return list,errors.Wrap(err,"错误")
+	}
 	return list,nil
 }
 

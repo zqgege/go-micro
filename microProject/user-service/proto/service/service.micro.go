@@ -35,6 +35,7 @@ var _ server.Option
 
 type UserServicesService interface {
 	QueryUserByNname(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	CreateUser(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
 type userServicesService struct {
@@ -65,15 +66,27 @@ func (c *userServicesService) QueryUserByNname(ctx context.Context, in *Request,
 	return out, nil
 }
 
+func (c *userServicesService) CreateUser(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "UserServices.CreateUser", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserServices service
 
 type UserServicesHandler interface {
 	QueryUserByNname(context.Context, *Request, *Response) error
+	CreateUser(context.Context, *Request, *Response) error
 }
 
 func RegisterUserServicesHandler(s server.Server, hdlr UserServicesHandler, opts ...server.HandlerOption) error {
 	type userServices interface {
 		QueryUserByNname(ctx context.Context, in *Request, out *Response) error
+		CreateUser(ctx context.Context, in *Request, out *Response) error
 	}
 	type UserServices struct {
 		userServices
@@ -88,4 +101,8 @@ type userServicesHandler struct {
 
 func (h *userServicesHandler) QueryUserByNname(ctx context.Context, in *Request, out *Response) error {
 	return h.UserServicesHandler.QueryUserByNname(ctx, in, out)
+}
+
+func (h *userServicesHandler) CreateUser(ctx context.Context, in *Request, out *Response) error {
+	return h.UserServicesHandler.CreateUser(ctx, in, out)
 }

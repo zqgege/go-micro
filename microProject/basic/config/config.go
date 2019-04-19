@@ -23,6 +23,7 @@ var (
 	profiles                defaultProfiles
 	redisConfig             defaultRedisConfig
 	jwtConfig               defaultJwtConfig
+	mongoConfig				defaultMongoConfig
 	m                       sync.RWMutex
 	inited                  bool
 
@@ -82,6 +83,7 @@ func Init() {
 	config.Get(defaultRootPath, "mysql").Scan(&mysqlConfig)
 	config.Get(defaultRootPath,"redis").Scan(&redisConfig)
 	config.Get(defaultRootPath,"jwt").Scan(&jwtConfig)
+	config.Get(defaultRootPath,"mongodb").Scan(&mongoConfig)
 
 	// 标记已经初始化
 	inited = true
@@ -103,4 +105,8 @@ func GetJwtConfig() (ret JwtConfig) {
 // GetRedisConfig 获取redis配置
 func GetRedisConfig() (ret RedisConfig) {
 	return redisConfig
+}
+// GetMongoConfig 获取mongo配置
+func GetMongoConfig() (ret MongoConfig)  {
+	return mongoConfig
 }

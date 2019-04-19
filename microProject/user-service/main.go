@@ -13,6 +13,7 @@ import (
 	"microProject/user-service/handler"
 	"microProject/user-service/model"
 	s "microProject/user-service/proto/service"
+	py "microProject/user-service/proto/phoneyzm"
 )
 
 func main() {
@@ -36,6 +37,7 @@ func main() {
 
 	// Register Handler
 	s.RegisterUserServicesHandler(service.Server(), new(handler.Service))
+	py.RegisterPhoneyzmHandler(service.Server(),new(handler.Service))
 
 	// Run service
 	if err := service.Run(); err != nil {

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package mu.micro.book.srv.user;
+
+service Phoneyzm{
+    rpc GetPhoneYzm(Request) returns (Response);
+    rpc CreatePhoneYzm(Request) returns (Response);
+}
+
+message PhoneYzm{
+    int64 Phone = 1;
+    int64 Yzm = 2;
+    int64 IsUse = 3;
+    int64 ExTime = 4;
+    int64 CreateTime = 5;
+    int64 MechanismId = 6;
+}
+
+message Error{
+    int64 code = 1;
+    string datail = 2;
+}
+
+message Request{
+    int64 phone =1;
+    int64 MechanismId = 2;
+}
+
+message Response {
+    bool success = 1;
+    Error error = 2;
+    int64 yzm = 3;
+}

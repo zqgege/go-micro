@@ -1,0 +1,7 @@
+app:
+  mongodb:
+    enabled: true
+    #conn: 127.0.0.1:27017?maxPoolSize=10
+    conn: 127.0.0.1:27017
+    database: saas
+    #poolLimit: 10

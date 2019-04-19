@@ -4,6 +4,7 @@ package mu.micro.book.srv.user;
 
 service UserServices{
     rpc QueryUserByNname(Request) returns (Response);
+    rpc CreateUser(Request) returns (Response);
 }
 
 message User {
@@ -30,3 +31,4 @@ message Response {
     Error error = 2;
     repeated User user = 3;
 }
+
